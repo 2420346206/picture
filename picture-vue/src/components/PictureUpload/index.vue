@@ -13,7 +13,7 @@
     <div slot="file" slot-scope="{file}">
       <img
         class="el-upload-list__item-thumbnail"
-        :src="file.url" alt=""
+        :src="file.url" alt="图片加载失败"
       >
     </div>
     </el-upload>
@@ -40,15 +40,10 @@ export default {
       upload(formData).then(res => {
           // 上传成功
           this.pictureUrl = res.data
-
-          console.log("上传成功")
           onSuccess(res)
 
-          this.$emit("changeShow", {
-            isShow: true
-          })
-
-          this.$emit("getPictureUrl", {
+          this.$emit("success", {
+            isShow: true,
             url: this.pictureUrl
           })
         })

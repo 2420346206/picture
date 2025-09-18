@@ -1,4 +1,4 @@
-package com.yxk.bean;
+package com.yxk.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;

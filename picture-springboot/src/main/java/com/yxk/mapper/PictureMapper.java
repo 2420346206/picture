@@ -1,10 +1,10 @@
 package com.yxk.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.yxk.entity.User;
+import com.yxk.entity.Picture;
 import org.mapstruct.Mapper;
 
 @Mapper
-public interface UserMapper extends BaseMapper<User> {
+public interface PictureMapper extends BaseMapper<Picture> {
 
 }

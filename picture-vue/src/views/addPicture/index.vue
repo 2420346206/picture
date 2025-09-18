@@ -9,8 +9,6 @@
           :picture="picture"
           :spaceId="spaceId"
           @success="onSuccess"
-          @changeShow="changeShow"
-          @getPictureUrl="getPictureUrl"
         />
       </el-tab-pane>
       <el-tab-pane label="URL 上传" name="url">
@@ -28,7 +26,6 @@
       ref="pictureFormRef"
       :model="pictureForm"
       label-position="top"
-      @submit.native.prevent="handleSubmit"
       >
       <el-form-item label="名称" prop="name">
         <el-input v-model="pictureForm.name" placeholder="请输入名称" clearable />
@@ -73,7 +70,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" native-type="submit" style="width: 100%">创建</el-button>
+        <el-button type="primary" @click="onSubmit" style="width: 100%">创建</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -82,6 +79,7 @@
 <script>
 import PictureUpload from "@/components/PictureUpload";
 import UrlPictureUpload from "@/components/UrlPictureUpload";
+import { createPicture } from "@/api/picture.js";
 
 export default {
   name: "AddPicturePage",
@@ -121,16 +119,11 @@ export default {
 
   },
   methods: {
-    onSuccess(data) {
+    onSuccess(isShow, url) {
       // 上传成功后的回调，可以刷新页面或显示提示
-      console.log("上传成功", data)
-    },
-    getPictureUrl(url) {
-      this.pictureForm.url = url
-      console.log("url", url)
-    },
-    changeShow(isShow) {
       this.isShow = isShow
+      this.pictureForm.url = url
+      console.log("上传成功")
     },
     // 分类的模糊搜索
     querySearchCategory(queryString, cb) {
@@ -141,6 +134,17 @@ export default {
         : this.categoryOptions;
       cb(results);
     },
+    onSubmit() {
+      createPicture(this.pictureForm)
+        .then(res => {
+          this.$message.success("创建成功！")
+          // 提交后可以清空表单或跳转页面
+          trouter.push("/")
+        })
+        .catch(err => {
+          this.$message.error("创建失败：" + err.message);
+        });
+    }
   },
 };
 </script>
