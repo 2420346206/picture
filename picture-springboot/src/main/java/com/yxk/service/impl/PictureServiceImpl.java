@@ -23,7 +23,7 @@ public class PictureServiceImpl implements PictureService {
     public String Upload(MultipartFile file) {
         String fileName = "uploads/" + UUID.randomUUID() + "-" + file.getOriginalFilename();
         try {
-            ossClient.putObject("your-bucket", fileName, file.getInputStream());
+            ossClient.putObject(ossClientConfig.getBucket(), fileName, file.getInputStream());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -3,11 +3,11 @@
     <el-upload
       class="upload-demo"
       list-type="picture-card"
+      action="#"
       :file-list="fileList"
       :class="{hide:hideUpload}"
       :http-request="uploadFile"
       :on-change="handleChange"
-      :on-success="handleSuccess"
     >
     <i slot="default" class="el-icon-plus"></i>
     <div slot="file" slot-scope="{file}">
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import {upload} from '@/api/picture.js'
+
 export default {
   name: "PictureUpload",
   data() {
@@ -31,23 +33,35 @@ export default {
     };
   },
   methods: {
-    uploadFile() {
+    uploadFile({ file, onSuccess, onError }) {
+      let formData = new FormData()
+      formData.append('file', file)
+
+      upload(formData).then(res => {
+          // 上传成功
+          this.pictureUrl = res.data
+
+          console.log("上传成功")
+          onSuccess(res)
+
+          this.$emit("changeShow", {
+            isShow: true
+          })
+
+          this.$emit("getPictureUrl", {
+            url: this.pictureUrl
+          })
+        })
+        .catch(err => {
+          onError(err);
+          console.error(err)
+        })
     },
     handleChange(file, fileList) {
       this.fileList = fileList
       console.log(this.fileList.length)
       this.hideUpload = this.fileList.length >= 1 ? true : false
       console.log(this.hideUpload)
-    },
-    handleSuccess(response, file, fileList) {
-
-      console.log("上传成功", response, file)
-
-      this.pictureUrl = response.url || file.url
-
-      this.$emit("changeShow", {
-        isShow: true
-      });
     },
   }
 }

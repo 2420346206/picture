@@ -36,3 +36,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+# 忽略 Spring Boot 配置文件
+application.yml
+application-*.yml

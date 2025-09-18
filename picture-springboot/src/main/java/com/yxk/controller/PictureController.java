@@ -1,5 +1,7 @@
 package com.yxk.controller;
 
+import com.yxk.common.BaseResponse;
+import com.yxk.common.ResultUtils;
 import com.yxk.service.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +18,8 @@ public class PictureController {
     private PictureService pictureService;
 
     @PostMapping("/upload")
-    public String upload(@RequestPart("file")MultipartFile file) {
-        return pictureService.Upload(file);
+    public BaseResponse<String> upload(@RequestPart("file")MultipartFile file) {
+        String url = pictureService.Upload(file);
+        return ResultUtils.success(url);
     }
 }

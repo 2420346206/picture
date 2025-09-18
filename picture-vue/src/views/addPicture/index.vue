@@ -10,6 +10,7 @@
           :spaceId="spaceId"
           @success="onSuccess"
           @changeShow="changeShow"
+          @getPictureUrl="getPictureUrl"
         />
       </el-tab-pane>
       <el-tab-pane label="URL 上传" name="url">
@@ -92,6 +93,7 @@ export default {
       spaceId: null,
       isShow: true,
       pictureForm: {
+        url: "",
         name: "",
         introduction: "",
         category: "",
@@ -121,7 +123,11 @@ export default {
   methods: {
     onSuccess(data) {
       // 上传成功后的回调，可以刷新页面或显示提示
-      console.log("上传成功", data);
+      console.log("上传成功", data)
+    },
+    getPictureUrl(url) {
+      this.pictureForm.url = url
+      console.log("url", url)
     },
     changeShow(isShow) {
       this.isShow = isShow
