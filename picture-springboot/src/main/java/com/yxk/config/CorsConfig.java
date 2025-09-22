@@ -20,6 +20,6 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedOriginPatterns("http://localhost:9528")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
-                .exposedHeaders("*");
+                .exposedHeaders("Authorization");
     }
 }
