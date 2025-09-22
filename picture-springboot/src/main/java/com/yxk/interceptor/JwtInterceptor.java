@@ -1,5 +1,6 @@
 package com.yxk.interceptor;
 
+import com.yxk.constant.UserConstant;
 import com.yxk.utils.JwtUtils;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Enumeration;
 
 /**
  * JWT 拦截器：拦截请求，校验 Token
@@ -27,15 +27,6 @@ public class JwtInterceptor implements HandlerInterceptor {
 
         // 从 header 里获取 token
         String header = request.getHeader(jwtUtils.getHeader());
-
-        System.out.println("=== 打印所有请求头 ===");
-        Enumeration<String> headerNames = request.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-            String name = headerNames.nextElement();
-            String value = request.getHeader(name);
-            System.out.println(name + " : " + value);
-        }
-
         if (header == null || !header.startsWith(jwtUtils.getTokenPrefix())) {
             throw new RuntimeException("缺少或非法的 Token");
         }
@@ -50,7 +41,7 @@ public class JwtInterceptor implements HandlerInterceptor {
         }
 
         // 把用户信息放入 request，方便后续 Controller 使用
-        request.setAttribute("currentUserId", currentUserId);
+        request.setAttribute(UserConstant.USER_LOGIN_STATE, currentUserId);
 
         return true; // 放行
     }

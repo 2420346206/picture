@@ -89,7 +89,7 @@ export default {
       uploadType: "file",
       picture: {},
       spaceId: null,
-      isShow: true,
+      isShow: false,
       pictureForm: {
         url: "",
         name: "",
@@ -119,11 +119,11 @@ export default {
 
   },
   methods: {
-    onSuccess(isShow, url) {
+    onSuccess({ isShow, url }) {
       // 上传成功后的回调，可以刷新页面或显示提示
       this.isShow = isShow
       this.pictureForm.url = url
-      console.log("上传成功")
+      console.log("上传成功", url)
     },
     // 分类的模糊搜索
     querySearchCategory(queryString, cb) {
@@ -139,7 +139,7 @@ export default {
         .then(res => {
           this.$message.success("创建成功！")
           // 提交后可以清空表单或跳转页面
-          trouter.push("/")
+          this.$router.push('/')
         })
         .catch(err => {
           this.$message.error("创建失败：" + err.message);

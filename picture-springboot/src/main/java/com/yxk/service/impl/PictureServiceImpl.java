@@ -8,10 +8,8 @@ import com.yxk.config.OssClientConfig;
 import com.yxk.constant.UserConstant;
 import com.yxk.dto.PictureCreateDto;
 import com.yxk.entity.Picture;
-import com.yxk.entity.User;
 import com.yxk.mapper.PictureMapper;
 import com.yxk.service.PictureService;
-import org.apache.http.HttpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -54,8 +52,7 @@ public class PictureServiceImpl implements PictureService {
         // 将标签 list 转为 string
         picture.setTags(JSONUtil.toJsonStr(pictureCreateDto.getTags()));
 
-        User userLogin = (User) request.getSession().getAttribute(UserConstant.USER_LOGIN_STATE);
-        Long userId = userLogin.getId();
+        Long userId = (Long) request.getAttribute(UserConstant.USER_LOGIN_STATE);
         picture.setUserId(userId);
 
         int result = pictureMapper.insert(picture);

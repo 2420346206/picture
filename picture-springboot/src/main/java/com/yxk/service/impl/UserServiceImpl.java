@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.yxk.common.BusinessException;
 import com.yxk.common.ErrorCode;
+import com.yxk.constant.UserConstant;
 import com.yxk.entity.User;
 import com.yxk.mapper.UserMapper;
 import com.yxk.service.UserService;
@@ -26,7 +27,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getCurrentUserInfo(HttpServletRequest request) {
-        Long userId = (Long) request.getAttribute("currentUserId");
+        Long userId = (Long) request.getAttribute(UserConstant.USER_LOGIN_STATE);
         return userMapper.selectById(userId);
     }
 

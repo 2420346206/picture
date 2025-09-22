@@ -42,6 +42,10 @@ export default {
           this.pictureUrl = res.data
           onSuccess(res)
 
+          console.log(res)
+          console.log(res.data)
+          console.log(this.pictureUrl)
+
           this.$emit("success", {
             isShow: true,
             url: this.pictureUrl
