@@ -1,4 +1,7 @@
-package com.yxk.common;
+package com.yxk.utils;
+
+import com.yxk.common.BaseResponse;
+import com.yxk.common.ErrorCode;
 
 /**
  * 响应工具类

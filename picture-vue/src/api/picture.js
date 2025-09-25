@@ -19,3 +19,28 @@ export function createPicture(data) {
     data: data
   })
 }
+
+// 分页获取图片列表
+export function getList(data) {
+  return request({
+    url: '/picture/list/page',   // 替换成你后端的接口地址
+    method: 'post',
+    data: data
+  })
+}
+
+// 获取类别列表
+export function getCategoryList() {
+  return request({
+    url: '/picture/list/category',
+    method: 'get'
+  })
+}
+
+// 获取标签列表
+export function getTagList() {
+  return request({
+    url: '/picture/list/tag',
+    method: 'get'
+  })
+}

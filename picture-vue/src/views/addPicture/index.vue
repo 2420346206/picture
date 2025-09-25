@@ -79,7 +79,7 @@
 <script>
 import PictureUpload from "@/components/PictureUpload";
 import UrlPictureUpload from "@/components/UrlPictureUpload";
-import { createPicture } from "@/api/picture.js";
+import { createPicture, getCategoryList, getTagList } from "@/api/picture.js";
 
 export default {
   name: "AddPicturePage",
@@ -97,26 +97,16 @@ export default {
         category: "",
         tags: []
       },
-      categoryOptions: [
-        { value: "风景" },
-        { value: "人物" },
-        { value: "建筑" },
-        { value: "美食" },
-      ],
-      tagOptions: [
-        { value: "旅游", label: "旅游" },
-        { value: "工作", label: "工作" },
-        { value: "学习", label: "学习" },
-        { value: "生活", label: "生活" },
-        { value: "艺术", label: "艺术" },
-      ]
+      categoryOptions: [],
+      tagOptions: []
     };
   },
   computed: {
 
   },
   mounted() {
-
+    this.loadCategory()
+    this.loadTags()
   },
   methods: {
     onSuccess({ isShow, url }) {
@@ -125,6 +115,7 @@ export default {
       this.pictureForm.url = url
       console.log("上传成功", url)
     },
+
     // 分类的模糊搜索
     querySearchCategory(queryString, cb) {
       const results = queryString
@@ -134,6 +125,7 @@ export default {
         : this.categoryOptions;
       cb(results);
     },
+
     onSubmit() {
       createPicture(this.pictureForm)
         .then(res => {
@@ -144,7 +136,25 @@ export default {
         .catch(err => {
           this.$message.error("创建失败：" + err.message);
         });
-    }
+    },
+
+    // 从后端获取分类
+    loadCategory() {
+      getCategoryList().then(res => {
+        this.categoryOptions = res.data.map(c => ({ value: c }))
+      }).catch(err => {
+        this.$message.error("获取分类失败：" + err.message)
+      })
+    },
+
+    // 从后端获取标签
+    loadTags() {
+      getTagList().then(res => {
+        this.tagOptions = res.data.map(t => ({ value: t, label: t }))
+      }).catch(err => {
+        this.$message.error("获取标签失败：" + err.message)
+      })
+    },
   },
 };
 </script>

@@ -89,7 +89,11 @@ export default {
   },
   data() {
     return {
-
+      currentPage: 1,
+      previewVisible: false,
+      previewUrl: '',
+      shareDialogVisible: false,
+      shareLink: '',
     }
   },
   methods: {

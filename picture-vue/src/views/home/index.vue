@@ -3,7 +3,7 @@
     <!-- 搜索框 -->
     <div class="search-bar">
       <el-input placeholder="从海量图片中搜索" v-model="input" class="input-with-select">
-        <el-button slot="append" icon="el-icon-search"></el-button>
+        <el-button slot="append" icon="el-icon-search" @click="doSearch"></el-button>
       </el-input>
     </div>
 
@@ -23,7 +23,7 @@
     <!-- 标签选择 -->
     <div class="tag-bar">
       <span style="margin-right: 8px;">标签：</span>
-      <el-checkbox-group v-model="selectedTagList" @change="doSearch">
+      <el-checkbox-group v-model="selectedTagList" @change="doSearchTag">
         <el-checkbox-button
           v-for="tag in tagList"
           :key="tag"
@@ -35,75 +35,75 @@
     </div>
 
     <!-- 图片列表 -->
-    <PictureList :dataList="dataList" :loading="loading" style="margin: 8px 30px 0px 30px"/>
+    <PictureList :dataList="dataList" :loading="listLoading" style="margin: 8px 30px 0px 30px"/>
 
   </div>
 </template>
 
 <script>
 import PictureList from "@/components/PictureList";
+import { getList, getCategoryList, getTagList } from "@/api/picture.js"
+
 export default {
   components: {
     PictureList
   },
   data() {
     return {
-      list: null,
+      pageQuery: {
+        currentPage: 1,
+        pageSize: 12,
+        searchText: "",  // 搜索关键词
+        category: "", // 分类
+        tags: [],     // 标签
+      },
       listLoading: true,
       input: '',
-      categoryList: ['风景', '人物', '动物'],
-      tagList: ['高清', '壁纸', '插画', '艺术'],
+      categoryList: [],
+      tagList: [],
       selectedCategory: 'all', // 默认分类
-      selectedTagList: [false, false, false, false], // 每个标签的选中状态
-      dataList: [
-        {
-          id: 1,
-          name: '风景1',
-          url: 'https://picsum.photos/id/1015/300/200',
-          category: '风景',
-          tags: ['高清', '自然']
-        },
-        {
-          id: 2,
-          name: '风景2',
-          url: 'https://picsum.photos/id/1020/300/200',
-          category: '风景',
-          tags: ['壁纸', '艺术']
-        },
-        {
-          id: 3,
-          name: '人物1',
-          url: 'https://picsum.photos/id/1005/300/200',
-          category: '人物',
-          tags: ['高清', '人像']
-        },
-        {
-          id: 4,
-          name: '动物1',
-          url: 'https://picsum.photos/id/1024/300/200',
-          category: '动物',
-          tags: ['可爱', '宠物']
-        },
-        {
-          id: 5,
-          name: '建筑1',
-          url: 'https://img.ixintu.com/download/jpg/202110/5da9acfd954f0aad37bb4624b61a86ee_800_550.jpg!con',
-          category: '建筑',
-          tags: ['艺术', '城市']
-        }
-      ]
+      selectedTagList: [], // 每个标签的选中状态
+      dataList: []
     }
   },
   created() {
+    this.loadCategoryAndTag()
     this.fetchData()
   },
   methods: {
+    // 加载分类和标签
+    loadCategoryAndTag() {
+      getCategoryList().then(res => {
+        this.categoryList = res.data || []
+      })
+      getTagList().then(res => {
+        this.tagList = res.data || []
+      })
+    },
     fetchData() {
       this.listLoading = true
-      getList().then(response => {
-        this.list = response.data.items
+      getList(this.pageQuery).then(res => {
+        console.log('pictureList', res)
+        this.dataList = res.data.records
         this.listLoading = false
       })
+    },
+    doSearchCategory() {
+      this.pageQuery.current = 1; // 切换分类时回到第一页
+      this.pageQuery.searchText = '';
+      this.pageQuery.category = this.selectedCategory === "all" ? "" : this.selectedCategory;
+      this.fetchData();
+    },
+    doSearchTag() {
+      this.pageQuery.current = 1;
+      this.pageQuery.searchText = '';
+      this.pageQuery.tags = this.selectedTagList;
+      this.fetchData();
+    },
+    doSearch() {
+      this.pageQuery.current = 1;
+      this.pageQuery.searchText = this.input;
+      this.fetchData();
     }
   }
 }

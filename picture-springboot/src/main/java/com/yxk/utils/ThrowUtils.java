@@ -1,4 +1,7 @@
-package com.yxk.common;
+package com.yxk.utils;
+
+import com.yxk.common.BusinessException;
+import com.yxk.common.ErrorCode;
 
 /**
  * 异常处理工具类

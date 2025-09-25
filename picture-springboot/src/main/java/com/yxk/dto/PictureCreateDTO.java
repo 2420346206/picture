@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class PictureCreateDto {
+public class PictureCreateDTO {
 
     /**
      * 图片 url
