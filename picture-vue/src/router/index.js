@@ -57,7 +57,7 @@ export const constantRoutes = [
       path: 'home',
       name: 'Home',
       component: () => import('@/views/home/index'),
-      meta: { title: '主页', icon: 'dashboard' }
+      meta: { title: '公共图库', icon: 'dashboard' }
     }]
   },
 
@@ -73,23 +73,34 @@ export const constantRoutes = [
   },
 
   {
+    path: '/mySpace',
+    component: Layout,
+    children: [{
+      path: 'mySpace',
+      name: 'mySpace',
+      component: () => import('@/views/mySpace/index'),
+      meta: { title: '我的空间', icon: 'dashboard' }
+    }]
+  },
+
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',
     name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
+    meta: { title: '我的团队', icon: 'el-icon-s-help' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        path: 'addSpace',
+        name: 'AddSpace',
+        component: () => import('@/views/addSpace/index'),
+        meta: { title: '创建团队', icon: 'table' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        path: 'teamSpace',
+        name: 'TeamSpace',
+        component: () => import('@/views/teamSpace/index'),
+        meta: { title: '团队空间', icon: 'tree' }
       }
     ]
   },
@@ -101,7 +112,7 @@ export const constantRoutes = [
       {
         path: 'index',
         name: 'Form',
-        component: () => import('@/views/form/index'),
+        component: () => import('@/views/teamSpace/index'),
         meta: { title: 'Form', icon: 'form' }
       }
     ]
