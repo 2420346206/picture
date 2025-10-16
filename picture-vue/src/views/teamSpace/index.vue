@@ -14,10 +14,10 @@
 
     <!-- 筛选区域 -->
     <el-card class="filter-card" shadow="never">
-      <el-form :inline="true" :model="filters" label-width="80px">
+      <el-form :inline="true" :model="pageQuery" label-width="80px">
         <el-form-item label="空间名称">
           <el-input
-            v-model="filters.name"
+            v-model="pageQuery.spaceName"
             placeholder="请输入空间名称"
             clearable
             prefix-icon="el-icon-search"
@@ -27,21 +27,20 @@
 
         <el-form-item label="空间类型">
           <el-select
-            v-model="filters.type"
+            v-model="pageQuery.spaceLevel"
             placeholder="请选择"
             clearable
             @change="handleFilterChange"
           >
             <el-option label="全部" value="" />
-            <el-option label="业务分析" value="analysis" />
-            <el-option label="测试" value="test" />
-            <el-option label="营销" value="marketing" />
-            <el-option label="开发" value="dev" />
+            <el-option label="普通版" value="1" />
+            <el-option label="专业版" value="2" />
+            <el-option label="企业版" value="3" />
           </el-select>
         </el-form-item>
 
         <el-form-item label="排序">
-          <el-select v-model="filters.sort" placeholder="请选择" @change="handleFilterChange">
+          <el-select v-model="pageQuery.order" placeholder="请选择" @change="handleFilterChange">
             <el-option label="创建时间最新" value="desc" />
             <el-option label="创建时间最早" value="asc" />
           </el-select>
@@ -53,17 +52,17 @@
     <el-row :gutter="20" class="space-list">
       <el-col
         :span="6"
-        v-for="item in paginatedSpaces"
+        v-for="item in dataList"
         :key="item.id"
       >
         <el-card shadow="hover" class="space-card">
           <div class="card-header">
-            <span class="space-name">{{ item.name }}</span>
-            <el-tag size="mini" type="info">{{ item.typeName }}</el-tag>
+            <span class="space-name">{{ item.spaceName }}</span>
+            <el-tag size="mini" type="info">{{ item.spaceLevel }}</el-tag>
           </div>
           <div class="card-body">
             <p>创建时间：{{ item.createTime }}</p>
-            <p class="desc">{{ item.description }}</p>
+            <p class="desc">{{ item.spaceIntroduction }}</p>
           </div>
           <div class="card-footer">
             <el-button type="primary" size="mini" plain>进入空间</el-button>
@@ -79,65 +78,62 @@
         layout="total, prev, pager, next"
         :page-size="pageSize"
         :current-page.sync="currentPage"
-        :total="filteredSpaces.length"
+        :total="dataList.length"
       />
     </div>
   </div>
 </template>
 
 <script>
+import { getSpaceList } from "@/api/space.js";
+
 export default {
   name: "MySpace",
   data() {
     return {
-      filters: {
-        name: "",
-        type: "",
-        sort: "desc",
+      pageQuery: {
+        spaceName: '',
+        spaceIntroduction: '',
+        spaceLevel: null,
+        spaceType: '1',
+        order: "desc",
       },
       stats: [
-        { label: "总空间数", value: 10 },
-        { label: "业务分析", value: 3 },
-        { label: "测试空间", value: 2 },
-        { label: "营销空间", value: 3 },
+        { label: "总空间数", value: 8 },
+        { label: "普通版", value: 3 },
+        { label: "专业版", value: 3 },
+        { label: "企业版", value: 2 },
       ],
-      spaceList: [
-        { id: 1, name: "业务分析空间", type: "analysis", createTime: "2025-10-01", description: "用于业务数据分析的空间" },
-        { id: 2, name: "测试空间", type: "test", createTime: "2025-09-20", description: "测试功能用的空间" },
-        { id: 3, name: "营销空间", type: "marketing", createTime: "2025-08-11", description: "存放营销相关内容" },
-        { id: 4, name: "开发空间", type: "dev", createTime: "2025-07-09", description: "项目开发资源空间" },
-        { id: 5, name: "统计空间", type: "analysis", createTime: "2025-10-10", description: "用于统计与报表展示" },
-        { id: 6, name: "广告营销空间", type: "marketing", createTime: "2025-09-01", description: "广告策略与预算管理" },
-        { id: 7, name: "自动化测试空间", type: "test", createTime: "2025-09-22", description: "自动化脚本与报告" },
-        { id: 8, name: "产品开发空间", type: "dev", createTime: "2025-08-20", description: "用于产品开发协作" },
-        { id: 9, name: "BI分析空间", type: "analysis", createTime: "2025-07-15", description: "商业智能数据处理" },
-        { id: 10, name: "性能测试空间", type: "test", createTime: "2025-06-18", description: "性能压测报告汇总" },
+      dataList: [
+        { id: 1, spaceName: "业务分析空间", spaceLevel: "1", createTime: "2025-10-01", spaceIntroduction: "用于业务数据分析的空间" },
+        { id: 2, spaceName: "测试空间", spaceLevel: "2", createTime: "2025-09-20", spaceIntroduction: "测试功能用的空间" },
+        { id: 3, spaceName: "营销空间", spaceLevel: "3", createTime: "2025-08-11", spaceIntroduction: "存放营销相关内容" },
+        { id: 4, spaceName: "开发空间", spaceLevel: "1", createTime: "2025-07-09", spaceIntroduction: "项目开发资源空间" },
+        { id: 5, spaceName: "统计空间", spaceLevel: "2", createTime: "2025-10-10", spaceIntroduction: "用于统计与报表展示" },
+        { id: 6, spaceName: "广告营销空间", spaceLevel: "2", createTime: "2025-09-01", spaceIntroduction: "广告策略与预算管理" },
+        { id: 7, spaceName: "自动化测试空间", spaceLevel: "1", createTime: "2025-09-22", spaceIntroduction: "自动化脚本与报告" },
+        { id: 8, spaceName: "产品开发空间", spaceLevel: "2", createTime: "2025-08-20", spaceIntroduction: "用于产品开发协作" },
+        { id: 9, spaceName: "自动化测试空间", spaceLevel: "1", createTime: "2025-09-22", spaceIntroduction: "自动化脚本与报告" },
+        { id: 10, spaceName: "产品开发空间", spaceLevel: "2", createTime: "2025-08-20", spaceIntroduction: "用于产品开发协作" },
       ],
       currentPage: 1,
       pageSize: 8,
     };
   },
   computed: {
-    filteredSpaces() {
-      let list = [...this.spaceList];
-      const { name, type, sort } = this.filters;
-      if (name.trim()) list = list.filter(i => i.name.toLowerCase().includes(name.trim().toLowerCase()));
-      if (type) list = list.filter(i => i.type === type);
-      const typeMap = { analysis: "业务分析", test: "测试", marketing: "营销", dev: "开发" };
-      list.forEach(i => (i.typeName = typeMap[i.type] || "其他"));
-      list.sort((a, b) => sort === "desc"
-        ? new Date(b.createTime) - new Date(a.createTime)
-        : new Date(a.createTime) - new Date(b.createTime));
-      return list;
-    },
-    paginatedSpaces() {
-      const start = (this.currentPage - 1) * this.pageSize;
-      return this.filteredSpaces.slice(start, start + this.pageSize);
-    },
+  },
+  created() {
+    this.fetchData()
   },
   methods: {
     handleFilterChange() {
       this.currentPage = 1;
+    },
+    fetchData() {
+      getSpaceList(this.pageQuery).then(res => {
+        console.log('pictureList', res)
+        this.dataList = res.data.records
+      })
     },
   },
 };

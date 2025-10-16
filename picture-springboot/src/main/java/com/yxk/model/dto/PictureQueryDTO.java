@@ -1,4 +1,4 @@
-package com.yxk.dto;
+package com.yxk.model.dto;
 
 import com.yxk.common.PageRequest;
 import lombok.Data;

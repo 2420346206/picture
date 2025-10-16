@@ -2,11 +2,11 @@ package com.yxk.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yxk.common.BaseResponse;
-import com.yxk.dto.PictureQueryDTO;
+import com.yxk.model.dto.PictureQueryDTO;
 import com.yxk.utils.ResultUtils;
-import com.yxk.dto.PictureCreateDTO;
+import com.yxk.model.dto.PictureCreateDTO;
 import com.yxk.service.PictureService;
-import com.yxk.vo.PictureVO;
+import com.yxk.model.vo.PictureVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

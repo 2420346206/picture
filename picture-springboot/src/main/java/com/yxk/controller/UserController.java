@@ -1,9 +1,9 @@
 package com.yxk.controller;
 
-import com.yxk.entity.User;
+import com.yxk.model.entity.User;
 import com.yxk.common.BaseResponse;
 import com.yxk.utils.ResultUtils;
-import com.yxk.dto.UserLoginDTO;
+import com.yxk.model.dto.UserLoginDTO;
 import com.yxk.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

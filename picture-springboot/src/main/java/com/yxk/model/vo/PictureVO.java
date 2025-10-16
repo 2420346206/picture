@@ -1,7 +1,7 @@
-package com.yxk.vo;
+package com.yxk.model.vo;
 
 import cn.hutool.json.JSONUtil;
-import com.yxk.entity.Picture;
+import com.yxk.model.entity.Picture;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 

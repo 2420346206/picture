@@ -19,6 +19,14 @@
         />
       </el-form-item>
 
+      <el-form-item label="空间简介" prop="spaceIntroduction">
+        <el-input
+          v-model="spaceForm.spaceIntroduction"
+          placeholder="请输入空间简介"
+          clearable
+        />
+      </el-form-item>
+
       <el-form-item label="空间级别" prop="spaceLevel">
         <el-select
           v-model="spaceForm.spaceLevel"
@@ -53,14 +61,15 @@
         <span>空间级别介绍</span>
       </div>
       <p v-for="spaceLevel in spaceLevelList" :key="spaceLevel.value">
-        {{ spaceLevel.text }}：大小 {{ formatSize(spaceLevel.maxSize) }}，
-        数量 {{ spaceLevel.maxCount }}
+        {{ spaceLevel.text }}：最大数量 {{ spaceLevel.maxCount }} 张
       </p>
     </el-card>
   </div>
 </template>
 
 <script>
+import { addSpace } from "@/api/space.js";
+
 export default {
   name: 'AddSpacePage',
   data() {
@@ -68,39 +77,34 @@ export default {
       loading: false,
       spaceForm: {
         spaceName: '',
+        spaceIntroduction: '',
         spaceLevel: null,
-      },
-      spaceType: 'personal',
-      SPACE_TYPE_MAP: {
-        personal: '个人空间',
-        team: '团队空间',
+        spaceType: '1'
       },
       SPACE_LEVEL_OPTIONS: [
-        { label: '普通版', value: 1 },
-        { label: '专业版', value: 2 },
-        { label: '企业版', value: 3 },
+        { label: '普通版', value: 0 },
+        { label: '专业版', value: 1 },
+        { label: '企业版', value: 2 },
       ],
       spaceLevelList: [
-        { text: '普通版', maxSize: 1024 * 1024 * 10, maxCount: 100 },
-        { text: '专业版', maxSize: 1024 * 1024 * 100, maxCount: 1000 },
-        { text: '企业版', maxSize: 1024 * 1024 * 1000, maxCount: 10000 },
+        { text: '普通版', maxCount: 100 },
+        { text: '专业版', maxCount: 1000 },
+        { text: '企业版', maxCount: 10000 },
       ],
     }
   },
   methods: {
-    formatSize(size) {
-      if (size < 1024) return size + ' B'
-      if (size < 1024 * 1024) return (size / 1024).toFixed(2) + ' KB'
-      if (size < 1024 * 1024 * 1024)
-        return (size / 1024 / 1024).toFixed(2) + ' MB'
-      return (size / 1024 / 1024 / 1024).toFixed(2) + ' GB'
-    },
     handleSubmit() {
       this.loading = true
-      setTimeout(() => {
-        this.$message.success('提交成功')
+      addSpace(this.spaceForm).then(res => {
+        this.$message.success('创建成功！')
+        console.log(res);
         this.loading = false
-      }, 1000)
+        // 提交后跳转页面
+        this.$router.push('/team/teamSpace')
+      }).catch(err => {
+          this.$message.error("创建失败：" + err.message);
+        });
     },
   },
 }

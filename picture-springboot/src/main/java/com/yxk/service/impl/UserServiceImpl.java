@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.yxk.common.BusinessException;
 import com.yxk.common.ErrorCode;
 import com.yxk.constant.UserConstant;
-import com.yxk.entity.User;
+import com.yxk.model.entity.User;
 import com.yxk.mapper.UserMapper;
 import com.yxk.service.UserService;
 import com.yxk.utils.JwtUtils;

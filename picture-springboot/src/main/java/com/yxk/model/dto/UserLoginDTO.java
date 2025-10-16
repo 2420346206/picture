@@ -1,4 +1,4 @@
-package com.yxk.dto;
+package com.yxk.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

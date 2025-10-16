@@ -1,6 +1,6 @@
 package com.yxk.service;
 
-import com.yxk.entity.User;
+import com.yxk.model.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
 

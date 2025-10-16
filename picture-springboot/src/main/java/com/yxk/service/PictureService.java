@@ -1,9 +1,9 @@
 package com.yxk.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yxk.dto.PictureCreateDTO;
-import com.yxk.dto.PictureQueryDTO;
-import com.yxk.vo.PictureVO;
+import com.yxk.model.dto.PictureCreateDTO;
+import com.yxk.model.dto.PictureQueryDTO;
+import com.yxk.model.vo.PictureVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;

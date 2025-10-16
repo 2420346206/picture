@@ -1,4 +1,4 @@
-package com.yxk.vo;
+package com.yxk.model.vo;
 
 import lombok.Data;
 

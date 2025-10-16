@@ -1,4 +1,4 @@
-package com.yxk.dto;
+package com.yxk.model.dto;
 
 import lombok.Data;
 
