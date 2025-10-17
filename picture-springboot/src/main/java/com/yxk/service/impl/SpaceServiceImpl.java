@@ -19,6 +19,7 @@ import com.yxk.model.enums.SpaceLevelEnum;
 import com.yxk.model.enums.SpaceRoleEnum;
 import com.yxk.model.enums.SpaceTypeEnum;
 import com.yxk.model.vo.PictureVO;
+import com.yxk.model.vo.SpaceCountVO;
 import com.yxk.model.vo.SpaceVO;
 import com.yxk.service.SpaceService;
 import com.yxk.service.SpaceUserService;
@@ -31,6 +32,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -167,12 +169,20 @@ public class SpaceServiceImpl extends ServiceImpl<SpaceMapper, Space> implements
         for (Space space: records) {
             SpaceVO spaceVO = new SpaceVO();
             BeanUtils.copyProperties(space ,spaceVO);
+            spaceVO.setSpaceLevelText(spaceVO.getSpaceLevelText());
             spaceVOList.add(spaceVO);
         }
 
         // 构造返回的分页对象（保持分页信息）
         Page<SpaceVO> result = new Page<>(spacePage.getCurrent(), spacePage.getSize(), spacePage.getTotal());
         result.setRecords(spaceVOList);
+
+        return result;
+    }
+
+    @Override
+    public List<SpaceCountVO> spaceCount() {
+        List<SpaceCountVO> result = new ArrayList<>();
 
         return result;
     }

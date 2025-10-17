@@ -44,3 +44,11 @@ export function getTagList() {
     method: 'get'
   })
 }
+
+// 根据 id 获取图片详细信息
+export function getPictureDetail(id) {
+  return request({
+    url: '/picture/get?id=' + id,
+    method: 'get',
+  })
+}

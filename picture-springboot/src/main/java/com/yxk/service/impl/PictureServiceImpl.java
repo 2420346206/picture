@@ -5,6 +5,8 @@ import com.aliyun.oss.OSS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yxk.common.ErrorCode;
@@ -32,7 +34,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class PictureServiceImpl implements PictureService {
+public class PictureServiceImpl extends ServiceImpl<PictureMapper, Picture> implements PictureService {
 
     private static final Logger log = LoggerFactory.getLogger(PictureServiceImpl.class);
     @Autowired
@@ -190,5 +192,11 @@ public class PictureServiceImpl implements PictureService {
 
         // 5. 返回结果
         return distinctTagList;
+    }
+
+    @Override
+    public PictureVO getPictureVOById(Long id) {
+        Picture picture = this.lambdaQuery().eq(Picture::getId, id).one();
+        return PictureVO.objToVo(picture);
     }
 }

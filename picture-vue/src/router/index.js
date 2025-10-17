@@ -62,6 +62,20 @@ export const constantRoutes = [
   },
 
   {
+    path: '/picture',
+    component: Layout,
+    children: [
+      {
+        path: ':id',
+        name: 'PictureDetail',
+        component: () => import('@/views/picture/PictureDetail.vue'),
+        meta: { title: '图片详情' },
+        hidden: true
+      }
+    ]
+  },
+
+  {
     path: '/addPicture',
     component: Layout,
     children: [{

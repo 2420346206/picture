@@ -6,18 +6,17 @@ import com.yxk.common.ErrorCode;
 import com.yxk.model.dto.SpaceAddDTO;
 import com.yxk.model.dto.SpaceQueryDTO;
 import com.yxk.model.entity.User;
+import com.yxk.model.vo.SpaceCountVO;
 import com.yxk.model.vo.SpaceVO;
 import com.yxk.service.SpaceService;
 import com.yxk.service.UserService;
 import com.yxk.utils.ResultUtils;
 import com.yxk.utils.ThrowUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping("/space")
@@ -41,6 +40,12 @@ public class SpaceController {
     public BaseResponse<Page<SpaceVO>> spaceList(@RequestBody SpaceQueryDTO spaceQueryDTO, HttpServletRequest request) {
         Page<SpaceVO> spacePage = spaceService.getSpaceVOPage(spaceQueryDTO, request);
         return ResultUtils.success(spacePage);
+    }
+
+    @GetMapping("/count")
+    public BaseResponse<List<SpaceCountVO>> spaceCount() {
+        List<SpaceCountVO> result = spaceService.spaceCount();
+        return ResultUtils.success(result);
     }
 
 }

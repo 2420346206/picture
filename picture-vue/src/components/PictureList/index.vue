@@ -9,7 +9,7 @@
         <el-card
           class="picture-card"
           shadow="hover"
-          @click="doClickPicture(picture)"
+          @click.native="doClickPicture(picture)"
         >
           <!-- 图片封面 -->
           <img
@@ -36,45 +36,9 @@
               {{ tag }}
             </el-tag>
           </div>
-
-          <!-- 操作按钮 -->
-          <!-- <div v-if="showOp" class="card-actions">
-            <el-button
-              type="text"
-              icon="el-icon-share"
-              @click.stop="doShare(picture)"
-            />
-            <el-button
-              type="text"
-              icon="el-icon-search"
-              @click.stop="doSearch(picture)"
-            />
-            <el-button
-              v-if="canEdit"
-              type="text"
-              icon="el-icon-edit"
-              @click.stop="doEdit(picture)"
-            />
-            <el-button
-              v-if="canDelete"
-              type="text"
-              icon="el-icon-delete"
-              @click.stop="doDelete(picture)"
-            />
-          </div> -->
         </el-card>
       </el-col>
     </el-row>
-
-    <!-- 分享弹窗 -->
-    <!-- <el-dialog title="分享图片" :visible.sync="shareDialogVisible" width="30%">
-      <div>
-        分享链接：<el-input v-model="shareLink" readonly />
-      </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="shareDialogVisible = false">关闭</el-button>
-      </span>
-    </el-dialog> -->
   </div>
 </template>
 
@@ -89,15 +53,15 @@ export default {
   },
   data() {
     return {
-      currentPage: 1,
-      previewVisible: false,
-      previewUrl: '',
-      shareDialogVisible: false,
-      shareLink: '',
+
     }
   },
   methods: {
-
+    doClickPicture(picture) {
+      // this.$router.push({ name: "PictureDetail", params: { id: picture.id } });
+      console.log('picture', picture);
+      this.$router.push(`/picture/${picture.id}`);
+    }
   },
 }
 </script>

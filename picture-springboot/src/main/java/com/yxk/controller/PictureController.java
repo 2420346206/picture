@@ -7,6 +7,8 @@ import com.yxk.utils.ResultUtils;
 import com.yxk.model.dto.PictureCreateDTO;
 import com.yxk.service.PictureService;
 import com.yxk.model.vo.PictureVO;
+import io.swagger.models.auth.In;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -60,5 +62,14 @@ public class PictureController {
     public BaseResponse<List<String>> tagList() {
         List<String> tagList = pictureService.tagList();
         return ResultUtils.success(tagList);
+    }
+
+    /**
+     * 获取标签列表
+     */
+    @GetMapping("/get")
+    public BaseResponse<PictureVO> getPictureById(@RequestParam Long id) {
+        PictureVO pictureVO = pictureService.getPictureVOById(id);
+        return ResultUtils.success(pictureVO);
     }
 }

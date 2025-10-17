@@ -6,9 +6,11 @@ import com.yxk.model.dto.SpaceAddDTO;
 import com.yxk.model.dto.SpaceQueryDTO;
 import com.yxk.model.entity.Space;
 import com.yxk.model.entity.User;
+import com.yxk.model.vo.SpaceCountVO;
 import com.yxk.model.vo.SpaceVO;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public interface SpaceService extends IService<Space> {
 
@@ -29,4 +31,9 @@ public interface SpaceService extends IService<Space> {
      * 获取团队空间列表（分页）
      */
     Page<SpaceVO> getSpaceVOPage(SpaceQueryDTO spaceQueryDTO, HttpServletRequest request);
+
+    /**
+     * 获取团队空间数量
+     */
+    List<SpaceCountVO> spaceCount();
 }

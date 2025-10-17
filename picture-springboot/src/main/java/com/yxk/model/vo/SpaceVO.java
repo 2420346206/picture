@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.yxk.model.enums.SpaceLevelEnum;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -27,6 +28,11 @@ public class SpaceVO implements Serializable {
      * 空间级别：0-普通版 1-专业版 2-旗舰版
      */
     private Integer spaceLevel;
+
+    /**
+     * 空间级别：普通版 专业版 旗舰版
+     */
+    private String spaceLevelText;
 
     /**
      * 空间类型：0-私有 1-团队
@@ -81,5 +87,10 @@ public class SpaceVO implements Serializable {
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+    public String getSpaceLevelText() {
+        SpaceLevelEnum levelEnum = SpaceLevelEnum.getEnumByValue(spaceLevel);
+        return levelEnum != null ? levelEnum.getText() : "未知级别";
+    }
 
 }

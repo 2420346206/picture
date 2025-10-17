@@ -58,7 +58,7 @@
         <el-card shadow="hover" class="space-card">
           <div class="card-header">
             <span class="space-name">{{ item.spaceName }}</span>
-            <el-tag size="mini" type="info">{{ item.spaceLevel }}</el-tag>
+            <el-tag size="mini" type="info">{{ item.spaceLevelText }}</el-tag>
           </div>
           <div class="card-body">
             <p>创建时间：{{ item.createTime }}</p>
@@ -104,18 +104,7 @@ export default {
         { label: "专业版", value: 3 },
         { label: "企业版", value: 2 },
       ],
-      dataList: [
-        { id: 1, spaceName: "业务分析空间", spaceLevel: "1", createTime: "2025-10-01", spaceIntroduction: "用于业务数据分析的空间" },
-        { id: 2, spaceName: "测试空间", spaceLevel: "2", createTime: "2025-09-20", spaceIntroduction: "测试功能用的空间" },
-        { id: 3, spaceName: "营销空间", spaceLevel: "3", createTime: "2025-08-11", spaceIntroduction: "存放营销相关内容" },
-        { id: 4, spaceName: "开发空间", spaceLevel: "1", createTime: "2025-07-09", spaceIntroduction: "项目开发资源空间" },
-        { id: 5, spaceName: "统计空间", spaceLevel: "2", createTime: "2025-10-10", spaceIntroduction: "用于统计与报表展示" },
-        { id: 6, spaceName: "广告营销空间", spaceLevel: "2", createTime: "2025-09-01", spaceIntroduction: "广告策略与预算管理" },
-        { id: 7, spaceName: "自动化测试空间", spaceLevel: "1", createTime: "2025-09-22", spaceIntroduction: "自动化脚本与报告" },
-        { id: 8, spaceName: "产品开发空间", spaceLevel: "2", createTime: "2025-08-20", spaceIntroduction: "用于产品开发协作" },
-        { id: 9, spaceName: "自动化测试空间", spaceLevel: "1", createTime: "2025-09-22", spaceIntroduction: "自动化脚本与报告" },
-        { id: 10, spaceName: "产品开发空间", spaceLevel: "2", createTime: "2025-08-20", spaceIntroduction: "用于产品开发协作" },
-      ],
+      dataList: [],
       currentPage: 1,
       pageSize: 8,
     };
