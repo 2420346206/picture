@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       pageQuery: {
-        currentPage: 1,
+        current: 1,
         pageSize: 12,
         searchText: "",  // 搜索关键词
         category: "", // 分类
